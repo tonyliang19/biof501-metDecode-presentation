@@ -12,9 +12,9 @@
 ::: {.column width="55%"}
 
 
-- **Circulating free DNA** (cfDNA) are DNA fragments released into bloodstream 
+- **Circulating free DNA** (cfDNA) are DNA fragments released into body fluids like bloodstream
 
-- Fraction of cfDNA could be released from cancer or tumor cells are **circulating-tumor DNA** (ctDNA)
+- Fraction of cfDNA could be released from cancer or tumor cells, **circulating-tumor DNA** (ctDNA)
 
 - Contains genetic and epigenetic changes, and could reveal the cells from which is originated
   - Identify different types of cancer
@@ -120,13 +120,17 @@ $$
 
 ::: {.notes}
 
+- ratio means methylated / number of cpg sites spanned over some marker region in a reference cell type
 - The unknown contributing part is actually to the atlas
 - $e_k > 0$ implies reconstructed cfDNA samples have higher methylation ratios than observed in 𝑅(cfdna), suggesting missing information in R (atlas)
 - lb is lower bound of quantile (0.4, Rk(atlas)), ub is upper bound of quantile (0.6 Rk(atlas))
 - These left bound and right bound are calculated by quantiles 
+- B is initialized by reference atlas, allows to be updated and deviate from reference atlas to compensate for imperfections of atlas, gradually optimized
 - Alpha represents initial cell type proportion estimates, obtained from non-negative least squares
 - $A_{ij}$ is estimated proportion of cell type $j$ to cfDNA profile $i$, found by minimizing weighted mean absolute error
 - k is a marker region, $R_k$ is k-th column of R(atlas)
+
+- And $AB \approx R$, where it represents methylation ratios
 
 :::
 
@@ -157,6 +161,12 @@ $$
 $$
 
 where $n_{k1}$ is number of times label $k$ appears in predictions, and $n_{k2}$ is  number of times label $k$ is a true label^[@artstein2008inter]
+
+:::
+
+::: {.notes}
+
+- Why pearson correlation is employed is to assess similarity between those of reference atlas and their estimate, but this is not clear from paper
 
 :::
 
@@ -221,9 +231,9 @@ where $n_{k1}$ is number of times label $k$ appears in predictions, and $n_{k2}$
 
 <br>
 
-- Ran on 50 simulation runs, each containing $5000$ simulated cfDNA samples.
+- Ran on 50 simulation runs, each containing $5000$ simulated cfDNA samples
 
-- Then computed Pearson Correlation Coefficient of different deconvolution algorithms
+- Then computed Pearson Correlation of deconvolution algorithms under the $23$ shortlisted DMRs
 
 - Upon averaging all correlation coefficients, MetDecode was [significantly higher]{.quaternary} than all other approaches
   - [BUT]{.secondary} not for looking at blood cell types only
@@ -234,7 +244,9 @@ where $n_{k1}$ is number of times label $k$ appears in predictions, and $n_{k2}$
 
 ::: {.notes}
 
-- Extra noise could come from sequencing tech difference, and mappability of genomes
+- Extra noise could come from sequencing depth difference, and mappability of genomes, and because it was from whole genome methylation sequencing
+
+
 - So, they reweighted their objective to lower contribution of lower coverage marker regions, since higher coverage enables more accurate estimate
 
 - For each cell type, one-sided T-test to assess difference of MetDecode and best of four others (including MetDecode without coverage)
