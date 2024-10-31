@@ -1,14 +1,15 @@
 ## Background
 
+
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="45%"}
 
 ![Circulating cell free DNA^[Adapted from Wikipedia]](assets/fig/CtDNA_in_circulation.png)
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="55%"}
 
 
 - **Circulating free DNA** (cfDNA) are DNA fragments released into bloodstream 
@@ -31,29 +32,93 @@
 
 :::
 
+## Detection the origin of cfDNA
 
-## Motivation -- What is the problem
+Current cfDNA screening test can detect presence of abnormal signals but **cannot** tell tumor's origin or cancer type or tissue of origin (TOO)
 
-This is the content of the presentation
+. . .
+
+- Computation methods uses epigenetic markers like **methylation profiles** to deduce origin of cfDNA fragments
+  - "Deconvolute" plasma cfDNA composition based on methylation profiles
+  - Varying approach, probabilistic, linear model, matrix factorization, etc. 
+  - Most require a reference atlas
+
+. . .
+
+::: {.callout-note}
+
+## Existing methods limiations
+
+- Cannot deconvolute multiple cancer tissues
+- Do not account for missing variables due to incompleteness of atlas
+- Do not allow full deconvolution of all cfDNA components and estimate cell proportion only
+
+:::
+
+::: {.notes}
+
+- Explain why using these epigentic markers, and why each is important
+
+- Reference atlas consist of either normal tissues or celltype specific methylation marker
+
+- Models could be linear combinations or multimodal analysis or support vector machine, some of them introduce feature selection to remove redundant markers, others use probabilitis model. 
+
+:::
+
+## MetDecode {.center2}
 
 
-## Motivation -- What have people done to solve this, and the gap
+---
 
-abc
+<!--
+![](assets/fig/metDecode_overview.jpeg)
+--->
 
-## Motivation -- What is the question of author trying to answer
+![](assets/new_fig.jpg){.nostretch fig-align="center" width=40%}
+
+<!---
+Authors developed their own reference-based deconvolution method, **MetDecode**
+
+- Account for missing data by extending reference atlas **on-the-fly** from cfDNA methylation profiles
+
+- Built their own reference atlas of tissue-specific methylation markers for 4 different cancer tissues
+  - Breast, ovarian, cervical, and colorectal
+--->
+
+::: {.notes}
+
+Authors developed their own reference-based deconvolution method, **MetDecode**
+
+- Account for missing data by extending reference atlas **on-the-fly** from cfDNA methylation profiles
+
+- Built their own reference atlas of tissue-specific methylation markers for 4 different cancer tissues
+  - Breast, ovarian, cervical, and colorectal
+
+:::
 
 
-abc
 
-## Methods -- How authors tackle the problem
+## The main algorithm
 
-abc
-
+Cre
 
 ## Methods -- Continuation
 
 abc
+
+
+
+
+## Evaluation metrics
+
+Using 4 Samples of 10 replicates of 12 different tumor fractions in-silico mixtures of tumor gDNA and healthy cfDNA and evaluate:
+
+- Pearson Correlation Coefficient and Mean Sqaured Error to evaluate MetDecode estimations
+- Accuracy to evaluate multiclass cancer TOO prediction, and Cohen's kappa to adjust for multiclass nature
+
+
+## Result 1 
+
 
 ## Results -- What authors get back 1
 
@@ -65,21 +130,71 @@ abc
 abc
 
 
-## Results -- What authors get back 3
+## Results
 
-abc
+![Cancer type prediction comparisons based on highest cancer contributors](assets/fig/cancer_pred-highlight.png)
+
+
+- MetDecode with 1 unknown contributor performs best based on Cohen'kappa
+
+- All methods do equally poor for $< 50\%$ accuracy when predicting all samples
+
+- Closer performance when looking at those $19$ samples with tumor fraction $> 3\%$^[This is based on ichorCNA from @adalsteinsson2017scalable]
+  - This is its $84.2\%$ accuracy of correct TOO in $16/19$ cancer cases
+
+
+::: {.notes}
+
+- Highest cancer contributor here has special meaning, given its multicass, author convert the way to see if prediction is normal or one of the TOO. This TOO is determined by taking some normalization, whereas highest is considered the TOO
+
+- So when method estimated all cancer contributor as zero, the predicted class is considered normal, otherwise it is the highest normalized contributor
+
+-  Half of the misclassified samples were classified as ovarian cancers
+
+- These samples were run with another tool ichorCNA which estimates tumor fraction in cell free DNA
+
+- One mucinous ovarian carcinoma (case 45, stage IV) was predicted to have breast cancer tissue as a major cancer contributor. One triple-negative breast cancer sample (case 8, stage I) was misclassified as ovarian.
+
+- Bottom is ground truth
+
+:::
 
 ## Conclusion of the authors
 
 abc
 
-## Summary of the paper
+## Summary
 
-abc
 
-## Limitations of this study
+::: {.callout-tip}
 
-abc
+## How could one utilize cfDNA?
+
+cfDNA epigenetic signatures can be used to deduce TOO or cancer type
+
+:::
+
+. . .
+
+MetDecode is an algorithm that estimates contributions and type of cancer in cfDNA sample
+
+
+- It models unknown contributors not present in the reference atlas
+
+- And accounts for coverage of each marker region to alleviate potential sources of noise
+
+
+## Limitations and Future Direction
+
+- Limited size of cfDNA samples for different cancer types
+  - Total 93 samples, 4 being Cervical, 13 being Ovarian, rest are breast and colorectal
+
+- Another limit
+
+- Deconvoluting and defining the TOO will aid the oncologists in identifying the tumor and direct treatment
+  - Specially when invasive examinations and radiological investigation are not ideal
+
+
 
 ## My comments on this study
 
