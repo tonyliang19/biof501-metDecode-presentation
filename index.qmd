@@ -32,16 +32,15 @@
 
 :::
 
-## Detection the origin of cfDNA
+## Detecting the origin of cfDNA
 
-Current cfDNA screening test can detect presence of abnormal signals but **cannot** tell tumor's origin or cancer type or tissue of origin (TOO)
+Current cfDNA screening test can detect presence of abnormal signals but [cannot]{.quaternary} tell tumor's origin or cancer type or tissue of origin (**TOO**)
 
 . . .
 
-- Computation methods use epigenetic markers like **methylation profiles** to deduce origin of cfDNA fragments
+- Computation methods use epigenetic markers like [**methylation profiles**]{.primary} to deduce origin of cfDNA fragments
   - "Deconvolute" plasma cfDNA composition
   - Varying approach, probabilistic, linear model, matrix factorization, etc. 
-  - Most require a reference atlas
 
 . . .
 
@@ -65,9 +64,15 @@ Current cfDNA screening test can detect presence of abnormal signals but **canno
 
 :::
 
-## MetDecode {.center2}
 
+## MetDecode
 
+In some sense, ["combined"]{.secondary} existing methodology like nonnegative least squares, matrix factorization etc.
+
+- Also built a newer reference atlas of tissue-specific methylation markers for 4 different cancer tissues
+  - Breast, ovarian, cervical and colorectal
+
+- With option to **extend reference atlas** with unknown methylation patterns on-the-fly
 ---
 
 <!--
@@ -227,7 +232,10 @@ MetDecode is an algorithm that estimates contributions and type of cancer in cfD
 abc
 
 
-## Thank you
+# Thanks! {.thanks}
+
+
+## Reference
 
 
 
