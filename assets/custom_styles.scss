@@ -13,7 +13,7 @@ $backgroundColor: #fcfbf9;
 
 // Primary/body text
 $mainFont: 'Jost', sans-serif;
-$mainFontSize: 36px;//30px;
+$mainFontSize: 42px;//30px;
 $mainColor: #333;
 
 // Vertical spacing between blocks of text
@@ -85,6 +85,14 @@ $selectionColor: #fff;
 
 .stretch-protein {
   width: 650px !important;
+}
+
+figcaption{
+  text-align: center;
+}
+
+.figcaption{
+  text-align: center;
 }
 
 
