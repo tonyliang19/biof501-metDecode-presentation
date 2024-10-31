@@ -5,7 +5,7 @@
 
 ::: {.column width="45%"}
 
-![Circulating cell free DNA^[Adapted from Wikipedia]](assets/fig/CtDNA_in_circulation.png)
+![Circulating cell free DNA in bloodstream^[Adapted from Wikipedia]](assets/fig/CtDNA_in_circulation.png)
 
 :::
 
@@ -67,11 +67,11 @@ Current cfDNA screening test can detect presence of abnormal signals but [cannot
 
 ## MetDecode
 
-Authors^[@passemiers2024metdecode] came up with their reference-based deconvolution method
+Authors^[@passemiers2024metdecode] came up with their reference-based deconvolution method...
 
 . . .
 
-In some sense, ["combined"]{.secondary} existing methodology like nonnegative least squares, matrix factorization etc.
+In some sense, ["combining"]{.secondary} existing methodology like nonnegative least squares, matrix factorization etc.
 
 - Also built a newer reference atlas of tissue-specific methylation markers for 4 different cancer tissues
   - Breast, ovarian, cervical and colorectal
@@ -109,7 +109,7 @@ $$
 
 ## Some math behind how MetDecode address unknown cell type contributor
 
-To account unknown contributors in cfDNA mixture by adding $h$ extra rows to $R^{\text{(atlas)}}$
+To account for $h$ unknown contributors in cfDNA mixture by adding $h$ extra rows to $R^{\text{(atlas)}}$
 
 $$
 R_{hk}^{\text{(atlas)}} = \begin{cases} R_k^{lb}, \quad e_k > 0 \\ R_k^{ub}, \quad otherwise \end{cases} \quad \text{where} \quad e_k = \text{median}_i \quad \Big( -R_{ik}^{(cfdna)} + \sum\limits_{j} \alpha_{ij} R_{jk}^{(\text{atlas})} \Big)
@@ -130,7 +130,7 @@ $$
 
 :::
 
-::::
+
 
 
 
@@ -253,9 +253,9 @@ where $n_{k1}$ is number of times label $k$ appears in predictions, and $n_{k2}$
 
 ![Deconvolution of genomic DNA methylation profiles](assets/fig/fig6_full.png)
 
-- [High]{.primary} correlation when compraing complete blood counting and MetDecode deconvolution estimates
+- [High]{.primary} correlation when comparing complete blood counting and MetDecode deconvolution estimates
 
-- MetDecode with no unknown contributor outperformed NNLS in terms of average pearson correlation and MSE
+- MetDecode without unknown contributor outperformed NNLS in terms of average pearson correlation and MSE
   - Adding unknown contributor should've [increased]{.quaternary} performance though, but did not
 
 ::: {.notes}
@@ -273,7 +273,7 @@ where $n_{k1}$ is number of times label $k$ appears in predictions, and $n_{k2}$
 
 - MetDecode with 1 unknown contributor performs best based on Cohen'kappa
 
-- All methods do [equally poor]{.secondary} for $< 50\%$ accuracy when predicting all samples
+- All methods perform [equally poor]{.secondary} for $< 50\%$ accuracy when predicting all samples
 
 - Closer performance when looking at those $19$ samples with tumor fraction $> 3\%$^[This is based on ichorCNA from @adalsteinsson2017scalable]
   - This is its $84.2\%$ accuracy of correct TOO in $16/19$ cancer cases
