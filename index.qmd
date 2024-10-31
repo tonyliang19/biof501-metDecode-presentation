@@ -73,31 +73,19 @@ In some sense, ["combined"]{.secondary} existing methodology like nonnegative le
   - Breast, ovarian, cervical and colorectal
 
 - With option to **extend reference atlas** with unknown methylation patterns on-the-fly
+
 ---
 
-<!--
-![](assets/fig/metDecode_overview.jpeg)
---->
+![](assets/new_fig.jpg){.nostretch fig-align="center" width=100%}
 
-![](assets/new_fig.jpg){.nostretch fig-align="center" width=40%}
-
-<!---
-Authors developed their own reference-based deconvolution method, **MetDecode**
-
-- Account for missing data by extending reference atlas **on-the-fly** from cfDNA methylation profiles
-
-- Built their own reference atlas of tissue-specific methylation markers for 4 different cancer tissues
-  - Breast, ovarian, cervical, and colorectal
---->
 
 ::: {.notes}
 
-Authors developed their own reference-based deconvolution method, **MetDecode**
+- Constructed DNA methylation atlas for multiple blood cell types and tumor tissues from public databases BLUEPRINT, TCGA and their in house samples
 
-- Account for missing data by extending reference atlas **on-the-fly** from cfDNA methylation profiles
+- DMRs were determined by extending CpG sites with >30% differential methylation to regions of at least 4 CpGs.
 
-- Built their own reference atlas of tissue-specific methylation markers for 4 different cancer tissues
-  - Breast, ovarian, cervical, and colorectal
+- Then cpg count matrices from these DMRs would be used in their deconvolution algorithm to estimate cell type contributions to cfDNA
 
 :::
 
@@ -115,7 +103,7 @@ $$
 
 ::: {.callout-note collapse="true"}
 
-## Some math behind how MetDecode model this "unknown" contributor
+## Some math behind how MetDecode address unknown cell type contributor
 
 To account unknown contributors in cfDNA mixture by adding $h$ extra rows to $R^{\text{(atlas)}}$
 
@@ -133,7 +121,7 @@ $$
 - lb is lower bound of quantile (0.4, Rk(atlas)), ub is upper bound of quantile (0.6 Rk(atlas))
 - These left bound and right bound are calculated by quantiles 
 - Alpha represents initial cell type proportion estimates, obtained from non-negative least squares
-- $A_{ij}$ is estimated proportion of cell type $j$ to cfDNA profile $i$
+- $A_{ij}$ is estimated proportion of cell type $j$ to cfDNA profile $i$, found by minimizing weighted mean absolute error
 - k is a marker region, $R_k$ is k-th column of R(atlas)
 
 ::::
@@ -142,18 +130,56 @@ $$
 
 ## Evaluation metrics
 
-Using 4 Samples of 10 replicates of 12 different tumor fractions in-silico mixtures of tumor gDNA and healthy cfDNA and evaluate:
+- Pearson Correlation Coefficient and Mean Squared Error to evaluate MetDecode estimations
 
-- Pearson Correlation Coefficient and Mean Sqaured Error to evaluate MetDecode estimations
 - Accuracy to evaluate multiclass cancer TOO prediction, and Cohen's kappa to adjust for multiclass nature
+
+- Also, looked into limit of detection using in-silico mixtures of tumor gDNA and healthy cfDNA
+
 
 
 ## Result 1 
 
 
-## Results -- What authors get back 1
+## Coverage-based weighthing in MetDecode {.smaller}
 
-abc
+:::: {.columns}
+
+::: {.column width="55%"}
+
+![Evaluation of the coverage-based weighting used in MetDecode](assets/fig/fig3_coverage.png)
+
+:::
+
+::: {.column width="45%"}
+
+<br>
+
+- Ran on 50 simulation runs, each containing $5000$ simulated cfDNA samples.
+
+- Then computed Pearson Correlation Coefficient of different deconvolution algorithms
+
+- Upon averaging all correlation coefficients, MetDecode was [significantly higher]{.quaternary} than all other approaches
+  - [BUT]{.secondary} not for looking at blood cell types only
+
+:::
+
+::::
+
+::: {.notes}
+
+- Extra noise could come from sequencing tech difference, and mappability of genomes
+- So, they reweighted their objective to lower contribution of lower coverage marker regions, since higher coverage enables more accurate estimate
+
+- For each cell type, one-sided T-test to assess difference of MetDecode and best of four others (including MetDecode without coverage)
+
+- Simulations designed based on real data with random noise, for computation speed, used shortlisted 23x13 DMRs only and compare them with other algorithms
+
+- But performance much higher on cancer components, and not in blood cell types
+
+- The parenthesis one were p-value , all ran as one-sided t-test
+
+:::
 
 
 ## Results -- What authors get back 2
@@ -190,11 +216,7 @@ abc
 
 :::
 
-## Conclusion of the authors
-
-abc
-
-## Summary
+## Conclusion
 
 
 ::: {.callout-tip}
@@ -227,9 +249,13 @@ MetDecode is an algorithm that estimates contributions and type of cancer in cfD
 
 
 
-## My comments on this study
+## Some comments
 
-abc
+- Why weighting approach only improves deconvolution accuracy on cancer components only and not in blood cell types?
+
+- Cell type deconvolution still seems hard (low accuracy in terms of predicting cancer type), what is the next step?
+
+- ~~[Aside]{.secondary}, can you always just combined existing approach to get a "new" method out?~~
 
 
 # Thanks! {.thanks}
