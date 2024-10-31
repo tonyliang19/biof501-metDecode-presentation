@@ -38,8 +38,8 @@ Current cfDNA screening test can detect presence of abnormal signals but **canno
 
 . . .
 
-- Computation methods uses epigenetic markers like **methylation profiles** to deduce origin of cfDNA fragments
-  - "Deconvolute" plasma cfDNA composition based on methylation profiles
+- Computation methods use epigenetic markers like **methylation profiles** to deduce origin of cfDNA fragments
+  - "Deconvolute" plasma cfDNA composition
   - Varying approach, probabilistic, linear model, matrix factorization, etc. 
   - Most require a reference atlas
 
@@ -98,14 +98,38 @@ Authors developed their own reference-based deconvolution method, **MetDecode**
 
 
 
-## The main algorithm
+## The main deconvolution algorithm
 
-Cre
+$$
+f(A) \quad = \quad \sum\limits_{i=1}^n \sum\limits_{k=1}^p \quad W_{ik} \quad \Big| \underbrace{R_{ik}^{\text{(cfdna)}}}_{(1)} - \underbrace{\sum\limits_{j=1}^m A_{ij} B_{jk}}_{(2)}\Big| 
+$$
 
-## Methods -- Continuation
+1. Methylation ratios $R^{\text{cfdna}}$
+2. Reconstructed matrix, which approximates $(1)$
 
-abc
 
+::: {.callout-note collapse="true"}
+
+## Some math behind how MetDecode model this "unknown" contributor
+
+To account unknown contributors in cfDNA mixture by adding $h$ extra rows to $R^{\text{atlas}}$
+
+$$
+R_h^{\text{atlas}} = \begin{cases} R_k^{lb}, \quad e_k > 0 \\ R_k^{ub}, \quad otherwise \end{cases} \quad \text{where} \quad e_k = \text{median}_i \quad \Big( -R_{ik}^{(cfdna)} + \sum\limits_{j} \alpha_{ij} R_{jk}^{(\text{atlas})} \Big)
+$$
+
+:::
+
+
+::: {.notes}
+
+- The unknown contributing part is actually to the atlas
+- These left bound and right bound are calculated by quantiles 
+- Alpha represents initial cell type proportion estimates, obtained from non-negative least squares
+- $A_{ij}$ is estimated proportion of cell type $j$ to cfDNA profile $i$
+- k is a marker region, $R_k$ is k-th column of R(atlas)
+
+::::
 
 
 
