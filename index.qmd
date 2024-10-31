@@ -67,6 +67,10 @@ Current cfDNA screening test can detect presence of abnormal signals but [cannot
 
 ## MetDecode
 
+Authors^[@passemiers2024metdecode] came up with their reference-based deconvolution method
+
+. . .
+
 In some sense, ["combined"]{.secondary} existing methodology like nonnegative least squares, matrix factorization etc.
 
 - Also built a newer reference atlas of tissue-specific methylation markers for 4 different cancer tissues
@@ -124,21 +128,83 @@ $$
 - $A_{ij}$ is estimated proportion of cell type $j$ to cfDNA profile $i$, found by minimizing weighted mean absolute error
 - k is a marker region, $R_k$ is k-th column of R(atlas)
 
+:::
+
 ::::
 
 
 
 ## Evaluation metrics
 
-- Pearson Correlation Coefficient and Mean Squared Error to evaluate MetDecode estimations
+- Pearson Correlation Coefficient $\rho$ and Mean Squared Error (MSE) to evaluate MetDecode estimations
 
-- Accuracy to evaluate multiclass cancer TOO prediction, and Cohen's kappa to adjust for multiclass nature
+- Accuracy to evaluate multiclass cancer TOO prediction, and Cohen's kappa to adjust for multiclass nature of the problem
 
-- Also, looked into limit of detection using in-silico mixtures of tumor gDNA and healthy cfDNA
+. . .
+
+::: {.callout-note}
+
+## Some notations
+
+$$
+MSE = \quad \frac{1}{n} \sum\limits_{i=1}^{n} \quad (Y_i - \hat{Y_i})^2 
+$$
+
+$$
+\begin{align*}
+\kappa &= \frac{(p_o - p_e)}{(1 - p_e)}, \quad p_e = \frac{1}{N^2} \sum\limits_{k=1}^K n_{k1} n_{k2}
+\end{align*}
+$$
+
+where $n_{k1}$ is number of times label $k$ appears in predictions, and $n_{k2}$ is  number of times label $k$ is a true label^[@artstein2008inter]
+
+:::
 
 
 
-## Result 1 
+## Creation of reference atlas and marker selection {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![Heatmap displaying the methylation ratios of all the selected marker regions](assets/fig/fig1_heatmap.png)
+
+:::
+
+::: {.column width="45%"}
+
+<br>
+<br>
+
+- READ had greatest number of siginifcant DMRs
+  - In contrast OV and CESC had lowest, due to lower coverage of these samples
+
+::: {.fragment}
+
+- [Three variants]{.quaternary} of deconvolution setting came up to address above:
+  1. Using all marker regions
+  2. Only signifcant marker regions
+  3. 23 [most discriminative]{.secondary} marker regions for each cell type, whereas 23 is roughly minimal number of DMR found for a cell type
+
+:::
+
+
+:::
+
+::::
+
+::: {.notes}
+
+- Rectum adenocarcinoma (READ)
+- Ovarian carcinoma (OV)
+- cervical squamous cell carcinoma (CESC)
+- discriminative means sorted by P-value
+
+- colour scale from hypermethylation to hypomethylation.
+
+
+:::
 
 
 ## Coverage-based weighthing in MetDecode {.smaller}
@@ -182,19 +248,32 @@ $$
 :::
 
 
-## Results -- What authors get back 2
-
-abc
+## Accuracy of complex mixture deconvolution {.smaller}
 
 
-## Results
+![Deconvolution of genomic DNA methylation profiles](assets/fig/fig6_full.png)
+
+- [High]{.primary} correlation when compraing complete blood counting and MetDecode deconvolution estimates
+
+- MetDecode with no unknown contributor outperformed NNLS in terms of average pearson correlation and MSE
+  - Adding unknown contributor should've [increased]{.quaternary} performance though, but did not
+
+::: {.notes}
+
+- Overall, these results demonstrate that MetDecode can accurately estimate proportions in samples containing a mixture of cell types. 
+
+:::
+
+
+
+## Identify TOO in cfDNA from cancer patients
 
 ![Cancer type prediction comparisons based on highest cancer contributors](assets/fig/cancer_pred-highlight.png)
 
 
 - MetDecode with 1 unknown contributor performs best based on Cohen'kappa
 
-- All methods do equally poor for $< 50\%$ accuracy when predicting all samples
+- All methods do [equally poor]{.secondary} for $< 50\%$ accuracy when predicting all samples
 
 - Closer performance when looking at those $19$ samples with tumor fraction $> 3\%$^[This is based on ichorCNA from @adalsteinsson2017scalable]
   - This is its $84.2\%$ accuracy of correct TOO in $16/19$ cancer cases
@@ -239,10 +318,9 @@ MetDecode is an algorithm that estimates contributions and type of cancer in cfD
 
 ## Limitations and Future Direction
 
-- Limited size of cfDNA samples for different cancer types
+- [**Limited size**]{.primary} of cfDNA samples for different cancer types
   - Total 93 samples, 4 being Cervical, 13 being Ovarian, rest are breast and colorectal
 
-- Another limit
 
 - Deconvoluting and defining the TOO will aid the oncologists in identifying the tumor and direct treatment
   - Specially when invasive examinations and radiological investigation are not ideal
@@ -252,6 +330,8 @@ MetDecode is an algorithm that estimates contributions and type of cancer in cfD
 ## Some comments
 
 - Why weighting approach only improves deconvolution accuracy on cancer components only and not in blood cell types?
+
+- Why sometimes adding extra unknown contributor yields better result and sometimes not?
 
 - Cell type deconvolution still seems hard (low accuracy in terms of predicting cancer type), what is the next step?
 
