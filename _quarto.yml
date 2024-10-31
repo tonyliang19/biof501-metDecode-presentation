@@ -7,6 +7,8 @@ bibliography: references.bib
 engine: knitr
 format:
   revealjs:
+    template-partials:
+      - title-slide.html
     slide-number: true
     hash-one-based-index: true
     history: false
