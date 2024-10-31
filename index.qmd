@@ -112,10 +112,10 @@ $$
 
 ## Some math behind how MetDecode model this "unknown" contributor
 
-To account unknown contributors in cfDNA mixture by adding $h$ extra rows to $R^{\text{atlas}}$
+To account unknown contributors in cfDNA mixture by adding $h$ extra rows to $R^{\text{(atlas)}}$
 
 $$
-R_h^{\text{atlas}} = \begin{cases} R_k^{lb}, \quad e_k > 0 \\ R_k^{ub}, \quad otherwise \end{cases} \quad \text{where} \quad e_k = \text{median}_i \quad \Big( -R_{ik}^{(cfdna)} + \sum\limits_{j} \alpha_{ij} R_{jk}^{(\text{atlas})} \Big)
+R_{hk}^{\text{(atlas)}} = \begin{cases} R_k^{lb}, \quad e_k > 0 \\ R_k^{ub}, \quad otherwise \end{cases} \quad \text{where} \quad e_k = \text{median}_i \quad \Big( -R_{ik}^{(cfdna)} + \sum\limits_{j} \alpha_{ij} R_{jk}^{(\text{atlas})} \Big)
 $$
 
 :::
@@ -124,6 +124,8 @@ $$
 ::: {.notes}
 
 - The unknown contributing part is actually to the atlas
+- $e_k > 0$ implies reconstructed cfDNA samples have higher methylation ratios than observed in 𝑅(cfdna), suggesting missing information in R (atlas)
+- lb is lower bound of quantile (0.4, Rk(atlas)), ub is upper bound of quantile (0.6 Rk(atlas))
 - These left bound and right bound are calculated by quantiles 
 - Alpha represents initial cell type proportion estimates, obtained from non-negative least squares
 - $A_{ij}$ is estimated proportion of cell type $j$ to cfDNA profile $i$
