@@ -1,7 +1,7 @@
-title: "This is the title"
-author: "Tony Liang"
-institute: "University of British Columbia"
-date: "2024"
+title: "MetDecode: methylation-based deconvolution of cell-free DNA for noninvasive multi-cancer typing"
+author: "Antoine Passemiers et al."
+institute: "Presenter: Tony Liang"
+date: "2024-10-31"
 date-format: long
 bibliography: references.bib
 engine: knitr
