@@ -1,1 +1,92 @@
+## Background
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+![Circulating cell free DNA^[Adapted from Wikipedia]](assets/fig/CtDNA_in_circulation.png)
+
+:::
+
+::: {.column width="50%"}
+
+
+- **Circulating free DNA** (cfDNA) are DNA fragments released into bloodstream 
+
+- Fraction of cfDNA could be released from cancer or tumor cells are **circulating-tumor DNA** (ctDNA)
+
+- Contains genetic and epigenetic changes, and could reveal the cells from which is originated
+  - Identify different types of cancer
+
+
+:::
+
+::::
+
+::: {.notes}
+
+- ctDNA are like fraction of cfDNA but derived from tumor cells
+
+- Apoptosis and necrosis are main sources of these ctDNA, these are simply two forms of cell death that naturally occurs in the body
+
+:::
+
+
+## Motivation -- What is the problem
+
 This is the content of the presentation
+
+
+## Motivation -- What have people done to solve this, and the gap
+
+abc
+
+## Motivation -- What is the question of author trying to answer
+
+
+abc
+
+## Methods -- How authors tackle the problem
+
+abc
+
+
+## Methods -- Continuation
+
+abc
+
+## Results -- What authors get back 1
+
+abc
+
+
+## Results -- What authors get back 2
+
+abc
+
+
+## Results -- What authors get back 3
+
+abc
+
+## Conclusion of the authors
+
+abc
+
+## Summary of the paper
+
+abc
+
+## Limitations of this study
+
+abc
+
+## My comments on this study
+
+abc
+
+
+## Thank you
+
+
+
